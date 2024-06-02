@@ -1,0 +1,45 @@
+[gd_scene load_steps=10 format=3 uid="uid://ctldry4by4qsr"]
+
+[ext_resource type="Texture2D" uid="uid://bmv0m2fg6wuw1" path="res://assets/kenney_prototype-textures/PNG/Green/texture_01.png" id="1_s18c2"]
+[ext_resource type="Script" path="res://Scenes/object/rigid objects/rigid_object.gd" id="1_uqr13"]
+[ext_resource type="Texture2D" uid="uid://bk3c88hhaaooc" path="res://assets/kenney_prototype-textures/PNG/Red/texture_01.png" id="2_2uftp"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_akl12"]
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3umal"]
+albedo_texture = ExtResource("1_s18c2")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vv2dx"]
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ak4rh"]
+albedo_texture = ExtResource("2_2uftp")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b4ewx"]
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_21ttk"]
+height = 1.0
+
+[node name="Rigid_object_cylinder" type="RigidBody3D" groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+max_contacts_reported = 1
+script = ExtResource("1_uqr13")
+is_orbed = true
+
+[node name="static_mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("CylinderMesh_akl12")
+material = SubResource("StandardMaterial3D_3umal")
+
+[node name="active_mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("CylinderMesh_vv2dx")
+material = SubResource("StandardMaterial3D_ak4rh")
+
+[node name="coll" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_b4ewx")
+
+[node name="Rigid_check" type="ShapeCast3D" parent="."]
+shape = SubResource("CylinderShape3D_21ttk")
+target_position = Vector3(0, 0, 0)

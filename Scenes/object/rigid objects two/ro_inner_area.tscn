@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://s0waml3l8pu2"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/ro_inner_area.gd" id="1_tjnfe"]
+
+[node name="RO_inner_area" type="Area3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_tjnfe")

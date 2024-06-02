@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapons" load_steps=3 format=3 uid="uid://b28oltji13bmn"]
+
+[ext_resource type="ArrayMesh" uid="uid://hbh8gmf8ixu6" path="res://data/weapon/Crowbar/crowbar_mesh.res" id="1_qljag"]
+[ext_resource type="Script" path="res://data/weapon/Basic Node/Weapons.gd" id="2_02w3d"]
+
+[resource]
+script = ExtResource("2_02w3d")
+name = &"CrowbarLeft"
+position = Vector3(-0.285, -0.3, -0.33)
+rotation = Vector3(-81, -97, -88)
+scale = Vector3(1.9, 1.9, 1.9)
+mesh = ExtResource("1_qljag")
+shadow = true
+damage_amount = 0.0

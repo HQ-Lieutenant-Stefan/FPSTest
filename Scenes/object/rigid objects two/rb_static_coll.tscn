@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhoh5qjgerjft"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/rb_static_coll.gd" id="1_dwhw4"]
+
+[node name="RB_static_coll" type="StaticBody3D"]
+script = ExtResource("1_dwhw4")

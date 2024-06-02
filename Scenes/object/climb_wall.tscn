@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://1iulis1vrm71"]
+
+[ext_resource type="Texture2D" uid="uid://dtl3hblxm04nd" path="res://assets/kenney_prototype-textures/Vector/texture_01.svg" id="1_htw4k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dai33"]
+albedo_texture = ExtResource("1_htw4k")
+uv1_triplanar = true
+
+[node name="ClimbWall" type="CSGBox3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+use_collision = true
+collision_layer = 2
+collision_mask = 2
+material = SubResource("StandardMaterial3D_dai33")

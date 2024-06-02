@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://le61rry863ge"]
+
+[ext_resource type="Texture2D" uid="uid://b5wesstdkfysb" path="res://assets/kenney_prototype-textures/PNG/Light/texture_07.png" id="1_2fsj2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8lij7"]
+size = Vector3(0.5, 0.2, 3.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sr34y"]
+albedo_texture = ExtResource("1_2fsj2")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gle1"]
+size = Vector3(0.5, 0.22, 3.5)
+
+[node name="beam" type="Node3D"]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+mesh = SubResource("BoxMesh_8lij7")
+material = SubResource("StandardMaterial3D_sr34y")
+
+[node name="Area3D" type="Area3D" parent="CSGMesh3D"]
+gravity_space_override = 3
+gravity_point = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGMesh3D/Area3D"]
+shape = SubResource("BoxShape3D_6gle1")
+
+[connection signal="body_entered" from="CSGMesh3D/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="CSGMesh3D/Area3D" to="." method="_on_area_3d_body_exited"]

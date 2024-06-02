@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://im5y2kwn4jsy"]
+
+[ext_resource type="Texture2D" uid="uid://bdujv6chu2rcw" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="1_kgnlx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5r3g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1shre"]
+albedo_texture = ExtResource("1_kgnlx")
+
+[sub_resource type="BoxMesh" id="BoxMesh_h4r1i"]
+material = SubResource("StandardMaterial3D_1shre")
+
+[node name="test_cube" type="RigidBody3D" groups=["Grab"]]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_i5r3g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_h4r1i")

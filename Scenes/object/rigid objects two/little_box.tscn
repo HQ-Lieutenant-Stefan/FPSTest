@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://cmy3o54dqyufu"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/Rigid_object_two.gd" id="1_kvsiw"]
+[ext_resource type="Texture2D" uid="uid://bdujv6chu2rcw" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="2_5ka6v"]
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/rb_static_coll.gd" id="3_aav5r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4ln6m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlxlb"]
+albedo_texture = ExtResource("2_5ka6v")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sm2jl"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t118n"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="Little_box" type="RigidBody3D" node_paths=PackedStringArray("mesh", "active_coll", "static_coll") groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_kvsiw")
+mesh = NodePath("MeshInstance3D")
+active_coll = NodePath("a")
+static_coll = NodePath("StaticBody3D")
+is_container = null
+is_open = null
+linear_velocity_lerp_speed = null
+angular_velocity_lerp_speed = null
+
+[node name="MeshInstance3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+mesh = SubResource("BoxMesh_4ln6m")
+material = SubResource("StandardMaterial3D_rlxlb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." node_paths=PackedStringArray("parent_node")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+script = ExtResource("3_aav5r")
+parent_node = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_sm2jl")
+
+[node name="a" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_t118n")

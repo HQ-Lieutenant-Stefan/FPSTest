@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtbuls784tcy0"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects/rigid_object.gd" id="1_s3vb4"]
+[ext_resource type="Texture2D" uid="uid://bmv0m2fg6wuw1" path="res://assets/kenney_prototype-textures/PNG/Green/texture_01.png" id="2_gn0kn"]
+[ext_resource type="Texture2D" uid="uid://bk3c88hhaaooc" path="res://assets/kenney_prototype-textures/PNG/Red/texture_01.png" id="3_ug4ga"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_oh2kv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3umal"]
+albedo_texture = ExtResource("2_gn0kn")
+
+[sub_resource type="SphereMesh" id="SphereMesh_357ha"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ak4rh"]
+albedo_texture = ExtResource("3_ug4ga")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hhj87"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4hlpv"]
+
+[node name="Rigid_object_sphere" type="RigidBody3D" groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+max_contacts_reported = 1
+script = ExtResource("1_s3vb4")
+is_orbed = true
+
+[node name="static_mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("SphereMesh_oh2kv")
+material = SubResource("StandardMaterial3D_3umal")
+
+[node name="active_mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("SphereMesh_357ha")
+material = SubResource("StandardMaterial3D_ak4rh")
+
+[node name="coll" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hhj87")
+
+[node name="Rigid_check" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_4hlpv")
+target_position = Vector3(0, 0, 0)

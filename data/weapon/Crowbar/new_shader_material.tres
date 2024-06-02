@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://his13kmydtc1"]
+
+[ext_resource type="Texture2D" uid="uid://cwx6ya41ygnwg" path="res://data/weapon/Crowbar/Crowbar_0.jpg" id="1_spid3"]
+[ext_resource type="Shader" uid="uid://bx2cey284mj3g" path="res://data/weapon/Crowbar/new_shader_crowbar.tres" id="1_ywdfj"]
+[ext_resource type="Texture2D" uid="uid://5now2vn5sdfk" path="res://data/weapon/Crowbar/Crowbar_1.png" id="2_g0d6y"]
+[ext_resource type="Texture2D" uid="uid://b2p2uetaen0jc" path="res://data/weapon/Crowbar/Crowbar_2.png" id="3_1ihey"]
+
+[resource]
+resource_name = "DefaultMaterial"
+render_priority = 0
+shader = ExtResource("1_ywdfj")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 1.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/ao_texture_channel = null
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/fov = 77.0
+shader_parameter/texture_albedo = ExtResource("1_spid3")
+shader_parameter/texture_metallic = ExtResource("2_g0d6y")
+shader_parameter/texture_roughness = ExtResource("2_g0d6y")
+shader_parameter/texture_normal = ExtResource("3_1ihey")
+shader_parameter/texture_ambient_occlusion = ExtResource("2_g0d6y")

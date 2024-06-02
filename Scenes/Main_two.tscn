@@ -1,0 +1,259 @@
+[gd_scene load_steps=20 format=3 uid="uid://fmhwo074mdod"]
+
+[ext_resource type="Environment" uid="uid://cx0bw5lw6gbam" path="res://Scenes/Main_two_EnviromentHigh.tres" id="1_y22fw"]
+[ext_resource type="Texture2D" uid="uid://bjrwxsenrss5q" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_01.png" id="2_4ycgt"]
+[ext_resource type="PackedScene" uid="uid://bgcpk1n0i457" path="res://Scenes/object/Stairs.tscn" id="3_gkkng"]
+[ext_resource type="Material" uid="uid://chrml3blvtujs" path="res://Scenes/Main_two.tres" id="3_tt5g5"]
+[ext_resource type="PackedScene" uid="uid://b776bqmk2a72i" path="res://Scenes/player/Player_3/player_3.tscn" id="6_im23c"]
+[ext_resource type="PackedScene" uid="uid://besxa6rxh1nd2" path="res://Scenes/player/Player_2/player_2.tscn" id="7_xew41"]
+[ext_resource type="Script" path="res://addons/CSGStairs/csg_stairs.gd" id="8_fnoiq"]
+[ext_resource type="PackedScene" uid="uid://ca0wevg1lb4rx" path="res://addons/WaterMaker3D/WaterMaker3D.tscn" id="9_adjq6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krkgj"]
+albedo_texture = ExtResource("2_4ycgt")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_sw7jm"]
+material = SubResource("StandardMaterial3D_krkgj")
+size = Vector3(1000, 100, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2x82"]
+albedo_texture = ExtResource("2_4ycgt")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbrpx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_50y60"]
+
+[sub_resource type="Curve3D" id="Curve3D_jhnq2"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 12.785, 0, 0, 0, 0, 0, 0, 0, 0, -1),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_geshm"]
+albedo_texture = ExtResource("2_4ycgt")
+uv1_triplanar = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6n1fd"]
+resource_local_to_scene = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_55toh"]
+resource_local_to_scene = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_6n1fd")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7lrbg"]
+resource_local_to_scene = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_6n1fd")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ht2p7"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.309804, 0.541176, 0.866667, 0.388235)
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_55toh")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_7lrbg")
+uv1_scale = Vector3(0.04, 0.04, 0.04)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="MainTwo" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 6.82679, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("1_y22fw")
+
+[node name="Floor" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_layer = 2
+collision_mask = 31
+
+[node name="Plate" type="CSGMesh3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+use_collision = true
+collision_layer = 2
+collision_mask = 7
+mesh = SubResource("BoxMesh_sw7jm")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2378, -1.94165, 1.22502)
+operation = 2
+size = Vector3(10.9339, 4.8833, 13.4124)
+material = SubResource("StandardMaterial3D_w2x82")
+
+[node name="Box" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23065, 2.00073, -14.638)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(9.81634, 4.00146, 4.80566)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 0.378539, -3.24842)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 0.757078, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 0.704894, -5.24842)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 1.40979, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 1.04864, -7.24842)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 2.09729, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 1.41368, -9.24842)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 2.82736, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 1.90404, -11.2484)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 3.80809, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0786, 2.37774, -13.2484)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4.00346, 4.75549, 2.09411)
+material = ExtResource("3_tt5g5")
+
+[node name="Plate" type="Node3D" parent="Box"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Box/Plate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.90232, -13.3257)
+material_override = ExtResource("3_tt5g5")
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(6, 0.5, 6)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Box/Plate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.06714, 2.55904, -13.3257)
+material_override = ExtResource("3_tt5g5")
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(10.0449, 0.5, 6)
+
+[node name="Stairs" parent="Box" instance=ExtResource("3_gkkng")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.74745, 1.5, -8.11107)
+
+[node name="Stairs2" parent="Box" instance=ExtResource("3_gkkng")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.75498, 1.5, -8.11107)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 0.898557, -0.438857, 0, 0.438857, 0.898557, 9.64512, 1.99774, -8.20478)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(5, 0.2, 8.80579)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448983, 5.52729)
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Box/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+size = Vector3(5, 5, 5)
+material = ExtResource("3_tt5g5")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Box/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0721741, 0.465866, 0.026947)
+operation = 2
+size = Vector3(6.28296, 1.63974, 1.44049)
+material = ExtResource("3_tt5g5")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.667, 1.44582, 5.5803)
+collision_layer = 4
+collision_mask = 15
+mass = 60.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_jbrpx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_50y60")
+
+[node name="Light" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Light"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4.8584)
+light_color = Color(0.843137, 0.788235, 0.741176, 1)
+shadow_enabled = true
+
+[node name="Player_2" parent="." instance=ExtResource("7_xew41")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.26372, 0, 0)
+disable = true
+
+[node name="Player_3" parent="." instance=ExtResource("6_im23c")]
+transform = Transform3D(-0.999897, 0, 0.0143637, 0, 1, 0, -0.0143637, 0, -0.999897, -27.9713, 0, -7)
+
+[node name="Stairs" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.52057, 0, -9.19646)
+curve = SubResource("Curve3D_jhnq2")
+script = ExtResource("8_fnoiq")
+height = 2.87
+width = 2.485
+step_height = 0.2
+stringer_material = SubResource("StandardMaterial3D_geshm")
+use_collision = true
+collision_layer = 2
+collision_mask = 31
+
+[node name="Stairs2" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.58, -4.37485, -4.6544)
+curve = SubResource("Curve3D_jhnq2")
+script = ExtResource("8_fnoiq")
+height = 4.56
+width = 12.37
+step_height = 0.2
+stringer_material = SubResource("StandardMaterial3D_geshm")
+use_collision = true
+collision_layer = 2
+collision_mask = 31
+
+[node name="WaterMaker3D" parent="." instance=ExtResource("9_adjq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4634, -2.35333, 1.01315)
+size = Vector3(12, 4.4, 15)
+material = SubResource("StandardMaterial3D_ht2p7")

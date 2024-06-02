@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://doo5xijj2rhvd"]
+
+[ext_resource type="Shader" uid="uid://rufkutktogx1" path="res://data/weapon/dev_pistol/Pistol_shader.tres" id="1_cke4s"]
+[ext_resource type="Texture2D" uid="uid://5lbtd0gs6x73" path="res://data/weapon/dev_pistol/DevPistol_Image_0.png" id="1_wfd4b"]
+[ext_resource type="Texture2D" uid="uid://bk1q0kg27famy" path="res://data/weapon/dev_pistol/DevPistol_Image_1.png" id="2_tjbbm"]
+[ext_resource type="Texture2D" uid="uid://cykj5mbpovtrf" path="res://data/weapon/dev_pistol/DevPistol_Image_2.png" id="3_3cmhw"]
+
+[resource]
+resource_name = "fallout_9mm"
+render_priority = 0
+shader = ExtResource("1_cke4s")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 1.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/ao_texture_channel = null
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/fov = 77.0
+shader_parameter/texture_albedo = ExtResource("1_wfd4b")
+shader_parameter/texture_metallic = ExtResource("2_tjbbm")
+shader_parameter/texture_roughness = ExtResource("2_tjbbm")
+shader_parameter/texture_normal = ExtResource("3_3cmhw")
+shader_parameter/texture_ambient_occlusion = ExtResource("2_tjbbm")

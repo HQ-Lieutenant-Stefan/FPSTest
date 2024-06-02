@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwiyixwobcy5g"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects/rigid_object.gd" id="1_qy3me"]
+[ext_resource type="Material" uid="uid://ckkrbckb60e8i" path="res://Scenes/object/rigid objects/mesh/static_mesh_test.tres" id="2_e0lty"]
+[ext_resource type="Material" uid="uid://cv2xqn2ccfmav" path="res://Scenes/object/rigid objects/mesh/active_mesh_test.tres" id="3_26667"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sels8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ngp5v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_41bci"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5i8qb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tdksk"]
+
+[node name="Rigid_object_box" type="RigidBody3D" groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+max_contacts_reported = 1
+script = ExtResource("1_qy3me")
+static_mesh = ExtResource("2_e0lty")
+active_mesh = ExtResource("3_26667")
+
+[node name="Mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("BoxMesh_sels8")
+
+[node name="static_mesh" type="CSGMesh3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_ngp5v")
+material = ExtResource("2_e0lty")
+
+[node name="active_mesh" type="CSGMesh3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_41bci")
+material = ExtResource("3_26667")
+
+[node name="coll" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5i8qb")
+
+[node name="Rigid_check" type="ShapeCast3D" parent="."]
+shape = SubResource("BoxShape3D_tdksk")
+target_position = Vector3(0, 0, 0)

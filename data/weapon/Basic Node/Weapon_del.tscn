@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://3jh00532cxil"]
+
+[ext_resource type="Script" path="res://data/weapon/Basic Node/init_weapon.gd" id="1_jyg6m"]
+[ext_resource type="ArrayMesh" uid="uid://hbh8gmf8ixu6" path="res://data/weapon/Crowbar/crowbar_mesh.res" id="2_ekn5d"]
+
+[node name="Weapon" type="Node3D"]
+transform = Transform3D(nan, nan, nan, nan, nan, nan, nan, nan, nan, 0.214558, -0.316838, -0.33)
+script = ExtResource("1_jyg6m")
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(nan, nan, nan, 0, -4.37114e-08, 1, nan, nan, nan, nan, nan, nan)
+layers = 2
+cast_shadow = 0
+mesh = ExtResource("2_ekn5d")
+
+[node name="WeaponShadow" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+layers = 2
+cast_shadow = 3
+mesh = ExtResource("2_ekn5d")

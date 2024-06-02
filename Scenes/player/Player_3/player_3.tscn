@@ -1,0 +1,192 @@
+[gd_scene load_steps=23 format=3 uid="uid://b776bqmk2a72i"]
+
+[ext_resource type="Script" path="res://Scenes/player/Player_3/Player_3.gd" id="1_2s7ls"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/Custom camera/Custom camera.gd" id="2_cco2d"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/WaterChecker.gd" id="2_g2gmb"]
+[ext_resource type="Script" path="res://Scenes/player/UI/Debug.gd" id="2_yntnr"]
+[ext_resource type="Script" path="res://Scenes/player/UI/Reticle.gd" id="3_o58vf"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Basic Node/FSMV3.gd" id="4_6rpg7"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/IDLE.gd" id="5_vnt2p"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Walking.gd" id="6_loy1o"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/NOCLIP.gd" id="6_yqmw3"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Sprinting.gd" id="7_ahn6v"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Jumping.gd" id="8_o71lq"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Falling.gd" id="9_7tnqw"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Crounching.gd" id="10_8f0um"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Sliding.gd" id="11_mq2ly"]
+[ext_resource type="Script" path="res://Scenes/player/Player_3/FSM V.3/Swiming.gd" id="14_orqrx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_omqy1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cpw4t"]
+height = 1.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_t0ee6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bfj8b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f5o41"]
+radius = 0.05
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mxmj3"]
+bg_color = Color(0, 0, 0, 0.478431)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.223529)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_gg65e"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_mxmj3")
+
+[node name="Player_3" type="CharacterBody3D" node_paths=PackedStringArray("Current_camera")]
+collision_mask = 31
+script = ExtResource("1_2s7ls")
+jump_peak_time = 0.45
+jump_fall_time = 0.45
+jump_height = 1.5
+Current_camera = NodePath("neck/head/eyes/F_view")
+
+[node name="StandingColl" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_omqy1")
+
+[node name="CrouncingColl" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00194931, 0.989926, -0.000767946)
+visible = false
+shape = SubResource("CapsuleShape3D_cpw4t")
+
+[node name="StandingMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_t0ee6")
+
+[node name="checker" type="Node3D" parent="."]
+
+[node name="UnderHeadCheck" type="ShapeCast3D" parent="checker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
+shape = SubResource("SphereShape3D_bfj8b")
+target_position = Vector3(0, 0.5, 0)
+collision_mask = 30
+
+[node name="WaterChecker" type="Node3D" parent="checker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+script = ExtResource("2_g2gmb")
+
+[node name="WaterCheckerArea" type="Area3D" parent="checker/WaterChecker"]
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="checker/WaterChecker/WaterCheckerArea"]
+shape = SubResource("SphereShape3D_f5o41")
+
+[node name="neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+visible = false
+
+[node name="head" type="Node3D" parent="neck"]
+
+[node name="eyes" type="Node3D" parent="neck/head"]
+
+[node name="F_view" type="Camera3D" parent="neck/head/eyes"]
+current = true
+script = ExtResource("2_cco2d")
+
+[node name="T_view" type="Camera3D" parent="neck/head/eyes"]
+transform = Transform3D(1, 0, 0, 0, 0.959052, 0.283229, 0, -0.283229, 0.959052, 0, 0.55, 2)
+script = ExtResource("2_cco2d")
+
+[node name="T_view4" type="Camera3D" parent="neck/head/eyes"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.85573, -0.602094, 0)
+script = ExtResource("2_cco2d")
+disable = true
+
+[node name="CameraSmoothNode" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 50.0
+theme = SubResource("Theme_gg65e")
+script = ExtResource("2_yntnr")
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Reticle" type="CenterContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_o58vf")
+metadata/_edit_use_anchors_ = true
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("4_6rpg7")
+CURRENT_STATE = NodePath("IDLE")
+
+[node name="NOCLIP" type="Node" parent="FSM"]
+script = ExtResource("6_yqmw3")
+
+[node name="IDLE" type="Node" parent="FSM"]
+script = ExtResource("5_vnt2p")
+
+[node name="Walking" type="Node" parent="FSM"]
+script = ExtResource("6_loy1o")
+
+[node name="Sprinting" type="Node" parent="FSM"]
+script = ExtResource("7_ahn6v")
+
+[node name="Jumping" type="Node" parent="FSM"]
+script = ExtResource("8_o71lq")
+
+[node name="Falling" type="Node" parent="FSM"]
+script = ExtResource("9_7tnqw")
+
+[node name="Crounching" type="Node" parent="FSM"]
+script = ExtResource("10_8f0um")
+
+[node name="Sliding" type="Node" parent="FSM"]
+script = ExtResource("11_mq2ly")
+
+[node name="Swiming" type="Node" parent="FSM"]
+script = ExtResource("14_orqrx")
+
+[node name="StairsAhead" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -1)
+target_position = Vector3(0, -0.55, 0)
+collision_mask = 31
+
+[node name="StairsBelow" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.3, 0)
+collision_mask = 31
+
+[connection signal="area_entered" from="checker/WaterChecker/WaterCheckerArea" to="checker/WaterChecker" method="_on_water_checker_area_area_entered"]
+[connection signal="area_exited" from="checker/WaterChecker/WaterCheckerArea" to="checker/WaterChecker" method="_on_water_checker_area_area_exited"]

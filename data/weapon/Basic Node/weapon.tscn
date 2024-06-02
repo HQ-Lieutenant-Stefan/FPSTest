@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1qt85mknayfg"]
+
+[ext_resource type="Script" path="res://data/weapon/Basic Node/init_weapon.gd" id="1_m2lys"]
+[ext_resource type="Resource" uid="uid://cdf5djio83lwf" path="res://data/weapon/dev_pistol/Pistol.tres" id="2_pvsm2"]
+[ext_resource type="Script" path="res://data/weapon/Basic Node/Recoil/PositionRecoil.gd" id="3_anpni"]
+[ext_resource type="ArrayMesh" uid="uid://curx6t08irldm" path="res://data/weapon/dev_pistol/PistolMesh.res" id="3_mngfi"]
+[ext_resource type="Script" path="res://data/weapon/Basic Node/Recoil/RecoilV2.gd" id="4_m7qlf"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fttx0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g0dbw"]
+noise = SubResource("FastNoiseLite_fttx0")
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_m2lys")
+weapon_type = ExtResource("2_pvsm2")
+sway_noise = SubResource("NoiseTexture2D_g0dbw")
+
+[node name="PositionRecoil" type="Node3D" parent="."]
+script = ExtResource("3_anpni")
+recoil_amount = Vector3(0.01, 0.01, 0.1)
+snap_amount = 2.5
+speed = 2.5
+
+[node name="Mesh" type="MeshInstance3D" parent="PositionRecoil"]
+unique_name_in_owner = true
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+cast_shadow = 0
+mesh = ExtResource("3_mngfi")
+skeleton = NodePath("../..")
+
+[node name="Shadow" type="MeshInstance3D" parent="PositionRecoil"]
+unique_name_in_owner = true
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+cast_shadow = 3
+mesh = ExtResource("3_mngfi")
+skeleton = NodePath("../..")
+
+[node name="CameraRecoil" type="Node3D" parent="."]
+script = ExtResource("4_m7qlf")

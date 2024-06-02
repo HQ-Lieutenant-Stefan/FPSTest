@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://db256jol8n04l"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/Rigid_object_two.gd" id="1_3mp1b"]
+[ext_resource type="Material" uid="uid://cv2xqn2ccfmav" path="res://Scenes/object/rigid objects two/mesh/active_mesh_test.tres" id="2_43eqo"]
+[ext_resource type="Material" uid="uid://ckkrbckb60e8i" path="res://Scenes/object/rigid objects two/mesh/static_mesh_test.tres" id="3_156do"]
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/rb_static_coll.gd" id="4_ljbq5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_snafp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kgddg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_au2tw"]
+
+[node name="box" type="RigidBody3D" node_paths=PackedStringArray("mesh", "active_coll", "static_coll") groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_3mp1b")
+mesh = NodePath("Mesh")
+active_coll = NodePath("active")
+static_coll = NodePath("static")
+active_mesh = ExtResource("2_43eqo")
+static_mesh = ExtResource("3_156do")
+
+[node name="Mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("BoxMesh_snafp")
+
+[node name="active" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_kgddg")
+
+[node name="static" type="StaticBody3D" parent="." node_paths=PackedStringArray("parent_node")]
+script = ExtResource("4_ljbq5")
+parent_node = NodePath("..")
+
+[node name="static_coll" type="CollisionShape3D" parent="static"]
+shape = SubResource("BoxShape3D_au2tw")

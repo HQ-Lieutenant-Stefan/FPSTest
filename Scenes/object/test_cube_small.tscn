@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://d118faxpwfcx8"]
+
+[ext_resource type="Texture2D" uid="uid://bdujv6chu2rcw" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="1_x0ft1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5r3g"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1shre"]
+albedo_texture = ExtResource("1_x0ft1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_h4r1i"]
+material = SubResource("StandardMaterial3D_1shre")
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_syur6"]
+data = PackedVector3Array(-0.15, 0.15, 0.15, 0.15, 0.15, 0.15, -0.15, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15, -0.15, 0.15, -0.15, -0.15, 0.15, 0.15, 0.15, -0.15, -0.15, 0.15, -0.15, 0.15, -0.15, -0.15, -0.15, 0.15, -0.15, -0.15, -0.15, -0.15, 0.15, -0.15, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15, -0.15, 0.15, -0.15, 0.15, 0.15, 0.15, -0.15, 0.15, -0.15, -0.15, 0.15, -0.15, 0.15, -0.15, 0.15, -0.15, -0.15, 0.15, 0.15, -0.15, -0.15, -0.15, -0.15, 0.15, 0.15, -0.15, -0.15, 0.15, -0.15, -0.15, -0.15, 0.15, 0.15, 0.15, -0.15, 0.15, 0.15, 0.15, 0.15, -0.15, -0.15, 0.15, 0.15, -0.15, 0.15, -0.15, 0.15, 0.15, -0.15, -0.15, -0.15, 0.15, 0.15, -0.15, 0.15, -0.15, -0.15, -0.15, 0.15, -0.15, 0.15, 0.15, -0.15, -0.15, -0.15, -0.15, -0.15)
+
+[node name="test_cube_small" type="RigidBody3D" groups=["Grab"]]
+collision_layer = 4
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_i5r3g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_h4r1i")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_syur6")

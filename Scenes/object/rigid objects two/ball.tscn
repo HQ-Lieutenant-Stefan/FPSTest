@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://dgmn8ef7drjvf"]
+
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/Rigid_object_two.gd" id="1_garwh"]
+[ext_resource type="Texture2D" uid="uid://bdujv6chu2rcw" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="2_btdim"]
+[ext_resource type="Material" uid="uid://cv2xqn2ccfmav" path="res://Scenes/object/rigid objects two/mesh/active_mesh_test.tres" id="2_h0rws"]
+[ext_resource type="Script" path="res://Scenes/object/rigid objects two/rb_static_coll.gd" id="3_ocse3"]
+[ext_resource type="Material" uid="uid://ckkrbckb60e8i" path="res://Scenes/object/rigid objects two/mesh/static_mesh_test.tres" id="3_qdhmr"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_07rqh"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_caqab"]
+albedo_texture = ExtResource("2_btdim")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_414ef"]
+radius = 0.25
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uhwhs"]
+radius = 0.25
+
+[node name="ball" type="RigidBody3D" node_paths=PackedStringArray("mesh", "active_coll", "static_coll") groups=["Grab"]]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_garwh")
+mesh = NodePath("mesh")
+active_coll = NodePath("active")
+static_coll = NodePath("static")
+active_mesh = ExtResource("2_h0rws")
+static_mesh = ExtResource("3_qdhmr")
+
+[node name="mesh" type="CSGMesh3D" parent="."]
+mesh = SubResource("SphereMesh_07rqh")
+material = SubResource("StandardMaterial3D_caqab")
+
+[node name="active" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_414ef")
+
+[node name="static" type="StaticBody3D" parent="." node_paths=PackedStringArray("parent_node")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_ocse3")
+parent_node = NodePath("..")
+
+[node name="static_coll" type="CollisionShape3D" parent="static"]
+shape = SubResource("SphereShape3D_uhwhs")

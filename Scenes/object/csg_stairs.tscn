@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf6adqc0616v"]
+
+[ext_resource type="Script" path="res://addons/CSGStairs/csg_stairs.gd" id="1_wqynw"]
+
+[sub_resource type="Curve3D" id="Curve3D_wqn8k"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="CSGStairs" type="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3559)
+curve = SubResource("Curve3D_wqn8k")
+script = ExtResource("1_wqynw")

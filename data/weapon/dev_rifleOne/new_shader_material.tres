@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dwc1a2wfbffxm"]
+
+[ext_resource type="Shader" uid="uid://cqite7sqrghbi" path="res://data/weapon/dev_rifleOne/new_shader.tres" id="1_3x6eh"]
+[ext_resource type="Texture2D" uid="uid://qy8q5f7gv6yy" path="res://data/weapon/dev_rifleOne/rifle_testOne_Image_0.png" id="1_r7e0t"]
+[ext_resource type="Texture2D" uid="uid://baun4ao1pe81w" path="res://data/weapon/dev_rifleOne/rifle_testOne_Image_1.png" id="2_obumw"]
+[ext_resource type="Texture2D" uid="uid://cx5csfywhvj3h" path="res://data/weapon/dev_rifleOne/rifle_testOne_Image_2.png" id="3_1usv0"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3x6eh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 1.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/ao_texture_channel = null
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/fov = 77.0
+shader_parameter/texture_albedo = ExtResource("1_r7e0t")
+shader_parameter/texture_metallic = ExtResource("2_obumw")
+shader_parameter/texture_roughness = ExtResource("2_obumw")
+shader_parameter/texture_normal = ExtResource("3_1usv0")
+shader_parameter/texture_ambient_occlusion = ExtResource("2_obumw")

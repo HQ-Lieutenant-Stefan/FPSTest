@@ -1,0 +1,449 @@
+[gd_scene load_steps=36 format=3 uid="uid://besxa6rxh1nd2"]
+
+[ext_resource type="Script" path="res://Scenes/player/Player_2/player_controller_v2.gd" id="1_fej1i"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Basic node/FSM.gd" id="2_r02dk"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/IDLE.gd" id="3_14hw1"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Walking.gd" id="4_1a3vt"]
+[ext_resource type="Script" path="res://Scenes/player/UI/Debug.gd" id="5_8jgen"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Jumping.gd" id="5_mfcyq"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Sprinting.gd" id="6_n22th"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Crounching.gd" id="7_ap246"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Sliding.gd" id="8_sj0ek"]
+[ext_resource type="Script" path="res://Scenes/player/Player_2/VaultingCheck.gd" id="9_31rvv"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Climbing.gd" id="9_k83c2"]
+[ext_resource type="Script" path="res://Scenes/player/Player_2/Hand.gd" id="10_1mwp1"]
+[ext_resource type="Script" path="res://Scenes/player/FSM/Falling.gd" id="10_02pkk"]
+[ext_resource type="PackedScene" uid="uid://c1qt85mknayfg" path="res://data/weapon/Basic Node/weapon.tscn" id="12_7g80s"]
+[ext_resource type="Script" path="res://Scenes/player/UI/Reticle.gd" id="12_upie3"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_v2xa2"]
+length = 0.2
+slide_on_slope = true
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_runy7"]
+length = 0.2
+slide_on_slope = true
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_5u3pi"]
+length = 0.2
+slide_on_slope = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oldjh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ncxce"]
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dviru"]
+albedo_color = Color(0.254902, 0.564706, 0.529412, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fplw5"]
+material = SubResource("StandardMaterial3D_dviru")
+
+[sub_resource type="SphereMesh" id="SphereMesh_msy5d"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5b40u"]
+height = 1.5
+radius = 0.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qu04g"]
+radius = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nr0qu"]
+size = Vector3(0.1, 1.3, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ecg2f"]
+size = Vector3(0.8, 1, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g6iem"]
+radius = 0.35
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vxpu7"]
+radius = 0.15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2l0q0"]
+bg_color = Color(0, 0, 0, 0.478431)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.223529)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_w0ydn"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_2l0q0")
+
+[sub_resource type="Animation" id="Animation_vogqd"]
+resource_name = "JumpEnd"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("neck:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.024, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.085, 0.4)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("neck:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.085, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0), Vector3(0, 1.75, 0), Vector3(0, 1.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jp582"]
+resource_name = "JumpStart"
+length = 0.55
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("neck:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.015, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.55)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("neck:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0), Vector3(0, 1.75, 0), Vector3(0, 1.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yhew5"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("neck/head/eyes:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("neck/head/eyes:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("neck/head/eyes:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StandingCollision:shape:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual:mesh:height")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("StandingCollision:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("neck:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("neck/head/eyes/First_view:fov")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [75.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("neck:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yaavd"]
+_data = {
+"JumpEnd": SubResource("Animation_vogqd"),
+"JumpStart": SubResource("Animation_jp582"),
+"RESET": SubResource("Animation_yhew5")
+}
+
+[node name="Player_2" type="CharacterBody3D" node_paths=PackedStringArray("Weapon_Controler") groups=["Player"]]
+collision_mask = 14
+script = ExtResource("1_fej1i")
+Weapon_Controler = NodePath("neck/head/eyes/First_view/WeaponRIG/Weapon")
+jump_velocity = 4.0
+jump_height = 1.5
+
+[node name="Left_stairs_checker" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.23, 0.33, -0.47)
+shape = SubResource("SeparationRayShape3D_v2xa2")
+disabled = true
+
+[node name="Forward_stairs_checker" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.33, -0.5)
+shape = SubResource("SeparationRayShape3D_runy7")
+disabled = true
+
+[node name="Right_stairs_checker" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.23, 0.33, -0.47)
+shape = SubResource("SeparationRayShape3D_5u3pi")
+disabled = true
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_r02dk")
+CURRENT_STATE = NodePath("IDLE")
+
+[node name="IDLE" type="Node" parent="FSM"]
+script = ExtResource("3_14hw1")
+
+[node name="Walking" type="Node" parent="FSM"]
+script = ExtResource("4_1a3vt")
+
+[node name="Jumping" type="Node" parent="FSM"]
+script = ExtResource("5_mfcyq")
+
+[node name="Sprinting" type="Node" parent="FSM"]
+script = ExtResource("6_n22th")
+
+[node name="Crounching" type="Node" parent="FSM"]
+script = ExtResource("7_ap246")
+
+[node name="Sliding" type="Node" parent="FSM"]
+script = ExtResource("8_sj0ek")
+
+[node name="Climbing" type="Node" parent="FSM"]
+script = ExtResource("9_k83c2")
+
+[node name="Falling" type="Node" parent="FSM"]
+script = ExtResource("10_02pkk")
+
+[node name="StandingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oldjh")
+
+[node name="CrouchingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.754853, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_ncxce")
+disabled = true
+
+[node name="Visual" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_fplw5")
+skeleton = NodePath("../StandingCollision")
+
+[node name="neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="head" type="Node3D" parent="neck"]
+
+[node name="eyes" type="Node3D" parent="neck/head"]
+
+[node name="First_view" type="Camera3D" parent="neck/head/eyes"]
+current = true
+
+[node name="Hand" type="RayCast3D" parent="neck/head/eyes/First_view"]
+visible = false
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 14
+script = ExtResource("10_1mwp1")
+
+[node name="Holder" type="Marker3D" parent="neck/head/eyes/First_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9)
+visible = false
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="neck/head/eyes/First_view"]
+visible = false
+node_a = NodePath("../StaticBody3D")
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="neck/head/eyes/First_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9)
+visible = false
+collision_layer = 0
+collision_mask = 0
+
+[node name="WeaponRIG" type="Node3D" parent="neck/head/eyes/First_view"]
+
+[node name="Weapon" parent="neck/head/eyes/First_view/WeaponRIG" node_paths=PackedStringArray("Recoil_camera") instance=ExtResource("12_7g80s")]
+transform = Transform3D(-0.996228, -0.00676597, -0.086506, -0.0173223, 0.992394, 0.121869, 0.0850238, 0.122908, -0.988767, 0.11, -0.09, -0.13)
+Recoil_camera = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="neck/head/eyes/First_view"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -2.61192)
+visible = false
+mesh = SubResource("SphereMesh_msy5d")
+
+[node name="Thrid_view" type="Camera3D" parent="neck/head/eyes"]
+transform = Transform3D(1, 0, 0, 0, 0.99199, 0.12632, 0, -0.12632, 0.99199, 0, 0.65869, 3)
+visible = false
+
+[node name="Recoil" type="Node3D" parent="neck/head/eyes"]
+
+[node name="CheckArray" type="Node3D" parent="."]
+
+[node name="ForwardPush" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_5b40u")
+target_position = Vector3(0, 0, 0)
+collision_mask = 8
+
+[node name="ForwardStairs" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(1, 0, 0, 0, 0.794424, 0, 0, 0, 1, 0, 1.68515, -0.844918)
+visible = false
+shape = SubResource("CylinderShape3D_qu04g")
+collision_mask = 14
+
+[node name="ForwardWall" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.09281, -0.488198)
+visible = false
+shape = SubResource("BoxShape3D_nr0qu")
+target_position = Vector3(0, 0, 0)
+collision_mask = 14
+
+[node name="UnderHead" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(-0.91, -8.8238e-10, 1.32117e-07, 0, 0.00582734, 2.61755, -7.95547e-08, 0.0100932, -1.51124, 0, 2.2, -0.4)
+visible = false
+shape = SubResource("BoxShape3D_ecg2f")
+target_position = Vector3(0, 0, 0)
+collision_mask = 6
+
+[node name="TopHeadCheck" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
+shape = SubResource("SphereShape3D_g6iem")
+target_position = Vector3(0, 0, 0)
+collision_mask = 6
+
+[node name="VaultingCheck" type="ShapeCast3D" parent="CheckArray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, -0.55)
+visible = false
+shape = SubResource("CapsuleShape3D_vxpu7")
+target_position = Vector3(0, -3.1, 0)
+collision_mask = 14
+debug_shape_custom_color = Color(1, 1, 0, 1)
+script = ExtResource("9_31rvv")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 50.0
+theme = SubResource("Theme_w0ydn")
+script = ExtResource("5_8jgen")
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Reticle" type="CenterContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_upie3")
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yaavd")
+}

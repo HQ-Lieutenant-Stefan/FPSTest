@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://darw61fdbotuh"]
+
+[ext_resource type="Texture2D" uid="uid://d3lik1417xi3l" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_05.png" id="1_xywpk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhpbg"]
+albedo_texture = ExtResource("1_xywpk")
+
+[node name="Slanted_wall" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46344, -0.222168)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+use_collision = true
+collision_layer = 2
+collision_mask = 2
+size = Vector3(5, 1, 3)
+material = SubResource("StandardMaterial3D_bhpbg")
